@@ -90,6 +90,21 @@
   }
 }
 
+.btn--delete {
+  background-color: #ed7f7f;
+  color: #fff; /* Set the text color to white */
+  padding: 10px 20px; /* Add some padding to the button */
+  border: none; /* Remove the border */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer; /* Change the cursor to a pointer on hover */
+  margin-left: 20px;
+  transition: all 0.2s;
+}
+.btn--delete:hover {
+  background-color: #d66565;
+  transform: scale(1.07);
+}
+
 .btn--round {
   background-image: $gradient;
   border-radius: 50%;

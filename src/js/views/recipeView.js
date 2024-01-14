@@ -10,6 +10,8 @@ class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message = '';
+  _delMessage = 'Recipe deleted successfully!';
+  _delError = 'Could not delete the recipe!';
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
@@ -27,6 +29,14 @@ class RecipeView extends View {
   addHandlerAddBookmark(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--bookmark');
+      if (!btn) return;
+      handler();
+    });
+  }
+
+  addHandlerDelete(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--delete');
       if (!btn) return;
       handler();
     });
@@ -92,6 +102,10 @@ class RecipeView extends View {
     }"></use>
           </svg>
         </button>
+        <button class="btn--delete">
+	          DELETE
+        </button>
+
       </div>
 
       <div class="recipe__ingredients">

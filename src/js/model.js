@@ -154,3 +154,22 @@ export const uploadRecipe = async function (newRecipe) {
     throw err;
   }
 };
+
+export const deleteRecipe = async () => {
+  const deleteUrl = `${API_URL}${state.recipe.id}?key=${KEY}`;
+  try {
+    console.log(`id is ${state.recipe.id}`);
+    const response = await fetch(deleteUrl, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    // Handle success, e.g., update UI or perform additional actions
+    console.log('Recipe deleted successfully');
+  } catch (error) {
+    // Handle errors, e.g., show an error message
+    console.error('Error deleting recipe:', error.message);
+  }
+};

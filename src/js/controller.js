@@ -1,5 +1,5 @@
 import * as model from './model.js';
-import { MODAL_CLOSE_SEC } from './config.js';
+import { API_URL, MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -88,6 +88,19 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlDelete = async function () {
+  try {
+    addRecipeView.renderSpinner();
+    await model.deleteRecipe();
+    model.deleteBookmark(model.state.recipe.id);
+    bookmarksView.render(model.state.bookmarks);
+    recipeView.renderMessage(recipeView._delMessage);
+  } catch (err) {
+    console.error('💥', err);
+    recipeView.renderError(recipeView._delError);
+  }
+};
+
 const controlAddRecipe = async function (newRecipe) {
   try {
     // Show loading spinner
@@ -123,6 +136,7 @@ const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
+  recipeView.addHandlerDelete(controlDelete);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
