@@ -17,6 +17,23 @@ class RecipeView extends View {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
   }
 
+  // Opening the recipe view on mobile devices
+  openRecipe = function () {
+    const element = document.querySelector('.recipe');
+    window.addEventListener('hashchange', function () {
+      element.classList.add('recipe-show');
+    });
+  };
+
+  // Closing the recipe view on mobile devices
+  addHandlerCloseRecipe() {
+    this._parentElement.addEventListener('click', function (e) {
+      const btnRecipeClose = e.target.closest('.recipe__btn-close');
+      if (!btnRecipeClose) return;
+      this.classList.remove('recipe-show');
+    });
+  }
+
   addHandlerUpdateServings(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
@@ -44,6 +61,7 @@ class RecipeView extends View {
 
   _generateMarkup() {
     return `
+      <div class="recipe__btn-close">X</div>
       <figure class="recipe__fig">
         <img src="${this._data.image}" alt="${
       this._data.title

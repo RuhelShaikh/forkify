@@ -6,9 +6,10 @@ $color-grad-2: #f48982;
 $color-grey-light-1: #f9f5f3; // Light background
 $color-grey-light-2: #f2efee; // Light lines
 $color-grey-light-3: #d3c7c3; // Light text (placeholder)
-$color-grey-light-4: #ffe1d2;
 $color-grey-dark-1: #615551; // Normal text
-$color-grey-dark-2: #918581; // Lighter text
+$color-grey-dark-2: #918581;
+$color-grey-light-4: #f0f0f0; // Define your variable here
+// Lighter text
 
 $gradient: linear-gradient(to right bottom, $color-grad-1, $color-grad-2);
 
@@ -16,6 +17,11 @@ $bp-large: 78.15em; // 1250px
 $bp-medium: 61.25em; // 980px
 $bp-small: 37.5em; // 600px
 $bp-smallest: 31.25em; // 500px
+
+//mobile
+$bp-mobile: 43.75em; // 700px
+$bp-mobile-med: 48.75em; // 780px
+$header-size-mobile: 18rem;
 
 * {
   margin: 0;
@@ -68,5 +74,16 @@ body {
     max-width: 100%;
     margin: 0;
     border-radius: 0;
+  }
+
+  //Mobile design
+  @media only screen and (max-width: $bp-mobile) {
+    grid-template-rows: unset;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'head'
+      'list'
+      'recipe';
+    min-height: 100vh;
   }
 }

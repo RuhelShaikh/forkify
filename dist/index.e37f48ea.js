@@ -580,7 +580,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _webImmediateJs = require("core-js/modules/web.immediate.js");
+var _webImmediateJs = require("core-js/modules/web.immediate.js"); // Call once on load
 var _modelJs = require("./model.js");
 var _configJs = require("./config.js");
 var _recipeViewJs = require("./views/recipeView.js");
@@ -699,6 +699,8 @@ const init = function() {
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
     (0, _addRecipeViewJsDefault.default).addHandlerUpload(controlAddRecipe);
+    (0, _recipeViewJsDefault.default).addHandlerCloseRecipe();
+    (0, _recipeViewJsDefault.default).openRecipe();
 };
 init();
 
@@ -2811,6 +2813,21 @@ class RecipeView extends (0, _viewJsDefault.default) {
             "load"
         ].forEach((ev)=>window.addEventListener(ev, handler));
     }
+    // Opening the recipe view on mobile devices
+    openRecipe = function() {
+        const element = document.querySelector(".recipe");
+        window.addEventListener("hashchange", function() {
+            element.classList.add("recipe-show");
+        });
+    };
+    // Closing the recipe view on mobile devices
+    addHandlerCloseRecipe() {
+        this._parentElement.addEventListener("click", function(e) {
+            const btnRecipeClose = e.target.closest(".recipe__btn-close");
+            if (!btnRecipeClose) return;
+            this.classList.remove("recipe-show");
+        });
+    }
     addHandlerUpdateServings(handler) {
         this._parentElement.addEventListener("click", function(e) {
             const btn = e.target.closest(".btn--update-servings");
@@ -2835,6 +2852,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
     }
     _generateMarkup() {
         return `
+      <div class="recipe__btn-close">X</div>
       <figure class="recipe__fig">
         <img src="${this._data.image}" alt="${this._data.title}" class="recipe__img" />
         <h1 class="recipe__title">
